@@ -1,4 +1,3 @@
-/* src/components/Homepage.css */
 .homepage-container {
     display: flex;
     height: 100vh;
@@ -41,7 +40,7 @@
   }
 
   .sidebar-menu li.current {
-    background-color: #555; /* Change background color for current item */
+    background-color: #555; 
   }
 
   .main-content {

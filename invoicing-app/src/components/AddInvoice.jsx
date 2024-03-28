@@ -1,29 +1,42 @@
-// src/components/AddInvoice.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './AddInvoice.css';
 import InvoicePreview from './InvoicePreview';
+import InvoiceList from './InvoiceList';
+
 
 const AddInvoice = () => {
   const [invoiceNumber, setInvoiceNumber] = useState('');
   const [invoiceDate, setInvoiceDate] = useState('');
   const [dueDate, setDueDate] = useState('');
   const [items, setItems] = useState([]);
+  const [name, setName] = useState('');
+  const [address, setAddress] = useState('');
   const [showMessage, setShowMessage] = useState(false);
   const [previewModalIsOpen, setPreviewModalIsOpen] = useState(false);
+  const [invoiceSaved, setInvoiceSaved] = useState(false);
 
   useEffect(() => {
     generateInvoiceNumber();
   }, []);
 
+  useEffect(() => {
+    if (invoiceSaved) {
+      setInvoiceNumber('');
+      setInvoiceDate('');
+      setDueDate('');
+      setItems([]);
+      setName('');
+      setAddress('');
+    }
+  }, [invoiceSaved]);
+
   const generateInvoiceNumber = () => {
-    // Generate a random invoice number for demonstration purposes
     const randomNumber = Math.floor(Math.random() * 1000000) + 1;
     setInvoiceNumber(`INV-${randomNumber}`);
   };
 
   const calculateTotal = () => {
-    // Calculate the total amount based on item prices and quantities
     return items.reduce((total, item) => total + item.quantity * item.unitPrice, 0);
   };
 
@@ -32,16 +45,18 @@ const AddInvoice = () => {
   };
 
   const handleSave = () => {
-    // Send data to backend to save the invoice
     axios.post('http://localhost:5000/invoices', { invoiceNumber, invoiceDate, dueDate, items })
       .then(response => {
         console.log('Invoice created successfully:', response.data);
-        setShowMessage(true); // Show success message
-        // Reset form fields after successful submission
+        setShowMessage(true); 
+        setInvoiceSaved(true); 
+        console.log('Invoice saved:', invoiceSaved); 
         setInvoiceNumber('');
         setInvoiceDate('');
         setDueDate('');
         setItems([]);
+        setName(''); 
+        setAddress('');
       })
       .catch(error => {
         console.error('Error creating invoice:', error);
@@ -54,11 +69,11 @@ const AddInvoice = () => {
   };
 
   const handlePreview = () => {
-    setPreviewModalIsOpen(true); // Open the preview modal
+    setPreviewModalIsOpen(true); 
   };
 
   const closePreviewModal = () => {
-    setPreviewModalIsOpen(false); // Close the preview modal
+    setPreviewModalIsOpen(false); 
   };
 
   return (
@@ -68,14 +83,14 @@ const AddInvoice = () => {
           <h2 className="text-center">INVOICE</h2>
         </div>
         <div>
-            <p className="system-name">System Name</p>
+            <p className="system-name">ABC Systems</p>
         </div>
       </div>
       <div className="intro">
         <div>
           <p className="bill-to-label">BILL TO:</p>
-          <p className='name'>Name</p>
-          <p className='address'>Address</p>
+          <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" />
+          <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="Address" />
         </div>
         <div className="invoice-detail">
           <p>Invoice Detail:</p>
@@ -109,8 +124,7 @@ const AddInvoice = () => {
       </div>
       <div className="flex justify-end">
         <div className='total'>
-          <p className="total-label">Total:</p> {/* Add styles for Total label */}
-          <p className="total-amount">{calculateTotal()}</p> {/* Add styles for Total amount */}
+          <p className="total-amount">Total: {calculateTotal()}</p> 
         </div>
       </div>
 
@@ -118,7 +132,6 @@ const AddInvoice = () => {
         <button id="preview-button" onClick={handlePreview}>Preview</button>
       </div>
 
-      {/* Render the InvoicePreview component */}
       <InvoicePreview
         isOpen={previewModalIsOpen}
         onClose={closePreviewModal}
@@ -134,13 +147,12 @@ const AddInvoice = () => {
         <div className="message">Invoice saved successfully!</div>
       )}
 
+      {invoiceSaved && <InvoiceList />}
+
       <div className="button-container">
         <button onClick={handleSubmit}>Save</button>
         
       </div>
-
-      
-
 
 
     </div>

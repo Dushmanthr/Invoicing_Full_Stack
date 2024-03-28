@@ -1,4 +1,3 @@
-/// src/components/Dashboard.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Dashboard.css';
@@ -8,7 +7,6 @@ const Dashboard = () => {
   const [totalCustomers, setTotalCustomers] = useState(0);
 
   useEffect(() => {
-    // Fetch total invoices count from backend
     axios.get('/api/invoices/count')
       .then(response => {
         setTotalInvoices(response.data.totalInvoices);
@@ -17,7 +15,6 @@ const Dashboard = () => {
         console.error('Error fetching total invoices count:', error);
       });
 
-    // Fetch total customers count from backend
     axios.get('/api/customers/count')
       .then(response => {
         setTotalCustomers(response.data.totalCustomers);

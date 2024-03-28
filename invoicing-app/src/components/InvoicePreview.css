@@ -1,0 +1,27 @@
+.total{
+    display: flex;
+    justify-content: space-between;
+    margin-right: 12vh;
+}
+  
+.total-label {
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    margin-top: 40px;
+    margin-left: 70vh;
+}
+  
+.total-amount {
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    margin-right: 12px;
+    margin-left: 3vh;
+    margin-top: 40px;
+}
+
+#close{
+    margin-top: 90px;
+    margin-left: 40vh;
+}
+  
+  

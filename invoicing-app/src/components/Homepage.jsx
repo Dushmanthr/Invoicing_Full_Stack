@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './Homepage.css'; // Import stylesheet for homepage styles
+import './Homepage.css'; 
 import { FaUser } from 'react-icons/fa';
 
 import Dashboard from './Dashboard';
@@ -11,16 +11,22 @@ import EditInvoice from './EditInvoice';
 const Homepage = () => {
   const [currentContent, setCurrentContent] = useState('Dashboard');
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const toggleLoginStatus = () => {
+    setIsLoggedIn(!isLoggedIn);
+  };
+
+
   const handleSidebarClick = (content) => {
     setCurrentContent(content);
   };
 
   return (
     <div className="homepage-container"> 
-        {/* Sidebar */}
         <div className="sidebar">
             <div className="sidebar-header">
-                <h2>Company Name</h2>
+                <h2>ABC Systems</h2>
             </div>
             <ul className="sidebar-menu">
                 <li onClick={() => handleSidebarClick('Dashboard')} className={currentContent === 'Dashboard' ? 'current' : ''}>
@@ -32,29 +38,19 @@ const Homepage = () => {
                 <li onClick={() => handleSidebarClick('Invoice List')} className={currentContent === 'Invoice List' ? 'current' : ''}>
                     <Link to="/invoices" style={{ color: '#fff' }}>Invoice List</Link>
                 </li>
-                <li onClick={() => handleSidebarClick('Edit Invoice')} className={currentContent === 'Edit Invoice' ? 'current' : ''}>
-                    <Link to="/invoices/:id/edit" style={{ color: '#fff' }}>Edit Invoice</Link>
-                </li>
             </ul>
         </div>
 
-      {/* Main Content */}
       <div className="main-content">
-        {/* Top Navigation */}
         <nav className="top-nav">
           <ul>
-            <li className="login-icon">
+          <li className="login-icon" onClick={toggleLoginStatus}>
               <FaUser />
-              {/* You can implement login functionality here */}
-              {/* When user clicks on the icon, display user details */}
-              {/* Add relevant CSS for user details dropdown */}
             </li>
           </ul>
         </nav>
 
-        {/* Content */}
         <div className="content">
-          {/* Render content based on current selection */}
           {currentContent === 'Dashboard' && <Dashboard />}
           {currentContent === 'Invoice List' && <InvoiceList />}
           {currentContent === 'Add Invoice' && <AddInvoice />}

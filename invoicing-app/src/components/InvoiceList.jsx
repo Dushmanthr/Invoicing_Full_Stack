@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { fetchInvoices, deleteInvoice } from './api'; 
 import './InvoiceList.css';
 
 const InvoiceList = () => {
@@ -8,11 +8,7 @@ const InvoiceList = () => {
   const [totalInvoices, setTotalInvoices] = useState(0);
 
   useEffect(() => {
-    fetchInvoices();
-  }, []);
-
-  const fetchInvoices = () => {
-    axios.get('http://localhost:5000/invoices')
+    fetchInvoices()
       .then(response => {
         setInvoices(response.data);
         setTotalInvoices(response.data.length);
@@ -20,26 +16,23 @@ const InvoiceList = () => {
       .catch(error => {
         console.error('Error fetching invoices:', error);
       });
-  };
+  }, []);
 
   const handleRemoveInvoice = (id) => {
-    axios.delete(`http://localhost:5000/invoices/${id}`)
+    deleteInvoice(id)
       .then(() => {
-        fetchInvoices();
+        fetchInvoices(); 
       })
       .catch(error => {
         console.error('Error removing invoice:', error);
       });
   };
 
-  
-
   return (
     <div>
       <h2 className='h2-invoices'>Invoices</h2>
       <div className='header-invoice-list'>
         <p className='total-invoices'>Total Invoices: {totalInvoices}</p>
-      
         <button id='add-new-button'>Add New</button>
       </div>
       <table className='invoice-table'>
@@ -71,8 +64,6 @@ const InvoiceList = () => {
       </table>
     </div>
   );
-
-  
 };
 
 export default InvoiceList;

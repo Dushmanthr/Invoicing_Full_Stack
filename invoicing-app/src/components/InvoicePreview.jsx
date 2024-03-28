@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
-import './InvoicePreview.css'; // You can define styles for the preview here
+import './InvoicePreview.css'; 
 
 const InvoicePreview = ({ invoiceData, isOpen, onClose }) => {
   return (
@@ -12,7 +12,7 @@ const InvoicePreview = ({ invoiceData, isOpen, onClose }) => {
               <h2 className="text-center">INVOICE</h2>
             </div>
             <div>
-              <p className="system-name">System Name</p>
+              <p className="system-name">ABC Systems</p>
             </div>
           </div>
           <div className="intro">
@@ -49,7 +49,7 @@ const InvoicePreview = ({ invoiceData, isOpen, onClose }) => {
             </tbody>
           </table>
           <div className="flex justify-end">
-            <div>
+            <div className='total'>
               <p className="total-label">Total:</p>
               <p className="total-amount">
                 {invoiceData.items.reduce(
@@ -60,7 +60,7 @@ const InvoicePreview = ({ invoiceData, isOpen, onClose }) => {
             </div>
           </div>
         </div>
-        <button onClick={onClose}>Close</button>
+        <button id='close' onClick={onClose}>Close</button>
       </div>
     </Modal>
   );
