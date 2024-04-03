@@ -12,17 +12,17 @@ const Dashboard = () => {
         setTotalInvoices(response.data.totalInvoices);
       })
       .catch(error => {
-        console.error('Error fetching total invoices count:', error);
+        console.error('Error fetching total invoices count:', error.response);
       });
-
+  
     axios.get('/api/customers/count')
       .then(response => {
         setTotalCustomers(response.data.totalCustomers);
       })
       .catch(error => {
-        console.error('Error fetching total customers count:', error);
+        console.error('Error fetching total customers count:', error.response);
       });
-  }, []);
+  }, []);  
 
   return (
     <div className="dashboard">

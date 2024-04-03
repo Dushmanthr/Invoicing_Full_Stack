@@ -44,24 +44,23 @@ const AddInvoice = () => {
     setItems([...items, { description: '', quantity: 1, unitPrice: 0 }]);
   };
 
-  const handleSave = () => {
-    axios.post('http://localhost:5000/invoices', { invoiceNumber, invoiceDate, dueDate, items })
-      .then(response => {
-        console.log('Invoice created successfully:', response.data);
-        setShowMessage(true); 
-        setInvoiceSaved(true); 
-        console.log('Invoice saved:', invoiceSaved); 
-        setInvoiceNumber('');
-        setInvoiceDate('');
-        setDueDate('');
-        setItems([]);
-        setName(''); 
-        setAddress('');
-      })
-      .catch(error => {
-        console.error('Error creating invoice:', error);
-      });
-  };
+  const handleSave = async () => {
+    try {
+      const response = await axios.post('http://localhost:5000/invoices', { invoiceNumber, invoiceDate, dueDate, items });
+      console.log('Invoice created successfully:', response.data);
+      setShowMessage(true);
+      setInvoiceSaved(true);
+      console.log('Invoice saved:', invoiceSaved);
+      setInvoiceNumber('');
+      setInvoiceDate('');
+      setDueDate('');
+      setItems([]);
+      setName('');
+      setAddress('');
+    } catch (error) {
+      console.error('Error creating invoice:', error.response);
+    }
+  }; 
 
   const handleSubmit = (e) => {
     e.preventDefault();
