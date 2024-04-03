@@ -146,7 +146,7 @@ const AddInvoice = () => {
         <div className="message">Invoice saved successfully!</div>
       )}
 
-      {invoiceSaved && <InvoiceList />}
+      {invoiceSaved && <InvoiceList refreshList={() => setInvoiceSaved(false)}/>}
 
       <div className="button-container">
         <button onClick={handleSubmit}>Save</button>
