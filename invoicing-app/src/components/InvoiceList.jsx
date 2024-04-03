@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { fetchInvoices, deleteInvoice } from './api'; 
 import './InvoiceList.css';
 
-const InvoiceList = () => {
+const InvoiceList = ({ refreshList }) => {
   const [invoices, setInvoices] = useState([]);
   const [totalInvoices, setTotalInvoices] = useState(0);
 
@@ -21,7 +21,15 @@ const InvoiceList = () => {
   const handleRemoveInvoice = (id) => {
     deleteInvoice(id)
       .then(() => {
-        fetchInvoices(); 
+        fetchInvoices()
+          .then(response => {
+            setInvoices(response.data);
+            setTotalInvoices(response.data.length);
+            refreshList();
+          })
+          .catch(error => {
+            console.error('Error fetching invoices:', error);
+          });
       })
       .catch(error => {
         console.error('Error removing invoice:', error);
