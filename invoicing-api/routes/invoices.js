@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Invoice = require('./models/invoice');
+const Invoice = require('../models/invoice');
 
 router.post('/', async (req, res) => {
   try {
